@@ -1,0 +1,44 @@
+version: "3"
+services:
+  backend:
+    container_name: node-mern-docker-boilerplate
+    build:
+      context: ./backend
+      dockerfile: docker-setup/node/development/Dockerfile
+    networks:
+      - default
+      - frontend
+    volumes:
+      - ./backend:/home/node/app
+    environment:
+      - NODE_ENV=development
+    env_file:
+      - ./backend/.env.development
+    tty: true
+    stdin_open: true
+    ports:
+      - "5000:4000"
+
+  frontend:
+    container_name: react-mern-docker-boilerplate
+    build:
+      context: ./frontend
+      dockerfile: docker-setup/react/development/Dockerfile
+    networks:
+      - frontend
+    environment:
+      - NODE_ENV=development
+    volumes:
+      - ./frontend:/frontend
+    depends_on:
+      - backend
+    tty: true
+    stdin_open: true
+    ports:
+      - "3000:3000"
+
+networks:
+  default:
+    name: backend-network-mern-docker-boilerplate
+  frontend:
+    name: frontend-network-mern-docker-boilerplate
