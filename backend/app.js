@@ -33,8 +33,8 @@ app.use(rateLimiter);
 const users_route = require("./routes/userRoutes");
 const chat_route = require("./routes/chatRoutes");
 
-app.use("api/v1/user", users_route);
-app.use("api/v1/chat", chat_route);
+app.use("/api/v1/user", users_route);
+app.use("/api/v1/chat", chat_route);
 
 // default case for unmatched routes
 app.use(function (req, res) {
